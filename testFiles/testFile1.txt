@@ -1,0 +1,8 @@
+program
+{
+    x, y: Float;
+
+    cin << x,y;
+    y := x+y;
+    cout >> y;
+}
