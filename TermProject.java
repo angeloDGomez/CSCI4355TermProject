@@ -22,6 +22,7 @@ public class TermProject{
 		MyScanner mySC = new MyScanner(inputFile);
 		mySC.scanProgram();
 		toks = mySC.getTokens();
+		System.out.println(toks);
 		symTab = mySC.getSymbolTable();
 		MyParser myP = new MyParser(toks, symTab);
 	}

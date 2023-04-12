@@ -27,6 +27,7 @@ public class MyScanner{
 	//Token IDs
 	static final int ident =0;
 	static final int floatLit = 5;
+	static final int newLine = 9;
 	// Operator IDs will be their index in the operator array + 10
 
 	/* Operators
@@ -80,7 +81,12 @@ public class MyScanner{
 	// Loop until currentChar is not a whiteSpace character.
 	private void getNonBlank(){
 		while(Character.isWhitespace(currChar) && strPtr!= inLen){
-			if(currChar == '\n'){lineCount++;}
+			if(currChar == '\n'){
+				lineCount++;
+				// Add new line to token list for line count and error handling in parser
+				MyTokens newLineTok = new MyTokens("", newLine);
+				myToks.add(newLineTok);
+				}
 			getChar();
 		}
 	}
