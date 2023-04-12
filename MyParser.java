@@ -11,27 +11,37 @@ public class MyParser{
 	private ArrayList<String> symTab = new ArrayList<String>();
 	
 	private MyTokens currTok;
-	private int tokCount = 0;
-	private int lineNum = 0;
+	private int tokCount;
+	private int lineNum;
 	
 	public MyParser(ArrayList<MyTokens> t, ArrayList<String> st){
 		this.myToks = t;
 		this.symTab = st;
+		this.tokCount = 0;
+		this.lineNum = 0;
+		currTok = myToks.get(tokCount);
+		tokCount +=1;
 	}
 	
 	public void parseProgram(){
 		getNextTok();
 		int totalToks = myToks.size();
-		do{
+		/*do{
 			r1();
-		}while(tokCount < totalToks);
+		}while(tokCount < totalToks);*/
 		
 	
 	}
 	
+	// sepearte into skip newlines and getNextTok
 	public void getNextTok(){
-		currTok = myToks.get(tokCount);
-		tokCount += 1;
+		// maybe replace this with id variables
+		while(currTok.getTID() == 9){
+			System.out.println(currTok);
+			currTok = myToks.get(tokCount);
+			tokCount += 1;
+			lineNum += 1;
+		}
 	}
 	
 	
