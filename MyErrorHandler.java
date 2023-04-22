@@ -7,14 +7,9 @@ public class MyErrorHandler{
 		System.out.printf("Error: Unexpected character found on line %d.\nEnding Scan.\n", lineCount);
 		System.exit(0);
 	}
-	/*
-	public static void syntaxErr(int lineCount){
-		System.out.printf("Error: Unexpected character found on line %d.\nEnding Scan.\n", lineCount);
-		System.exit(0);
-	}*/
 	
-	public static void missingExpectedSyntaxErr(int lineCount, String expectedVal){
-		System.out.printf("Error: Improper syntax. '%s' not found on line %d.\nEnding Parse.\n", expectedVal, lineCount);
+	public static void missingExpectedSyntaxErr(int lineCount, String expectedVal, String actualVal){
+		System.out.printf("Error: Improper syntax. Expected '%s' on line %d, but found '%s' instead.\nEnding Parse.\n", lineCount, expectedVal, actualVal);
 		System.exit(0);
 	}
 	
@@ -27,11 +22,13 @@ public class MyErrorHandler{
 		System.out.printf("Error: Symbol %s on line %d has already been declared.\nEnding Parse.\n", symbol, lineCount);
 		System.exit(0);		
 	}
-	/*
-	public static void unexpectedSymbolErr(int lineCount){
-		System.out.printf("Error: Unexpected symbol found on line %d.\nEnding Parse.\n", lineCount);
-		System.exit(0);
+	
+	public static void undeclaredSymbErr(int lineCount, String symbol){
+		System.out.printf("Error: Symbol %s on line %d was never declared.\nEnding Parse.\n", symbol, lineCount);
+		System.exit(0);		
 	}
+	/*
+
 	
 
 	

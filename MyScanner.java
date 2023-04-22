@@ -88,8 +88,7 @@ public class MyScanner{
 	}
 	
 	private boolean isKeyword(String lex){
-		// Make string lowercase. Instructions say language is case insensitive.
-		return Arrays.asList(keywords).contains(lex.toLowerCase());}
+		return Arrays.asList(keywords).contains(lex);}
 
 	// Check if symbol is a valid operator
 	private boolean inOPList(String testOP){
@@ -97,7 +96,7 @@ public class MyScanner{
 
 	// Check if user defined var is already in symbol table
 	private boolean inSTab(String testLex){
-		return symTab.contains(testLex.toLowerCase());}// Make string lowercase. Instructions say language is case insensitive.
+		return symTab.contains(testLex);}
 	
 	private void lex(){
 		lexeme = "";
@@ -114,7 +113,8 @@ public class MyScanner{
 					MyErrorHandler.unexpectedCharErr(lineCount);
 				}
 				// Add new variable name to the symbol table.
-				if (!isKeyword(lexeme) && !inSTab(lexeme)){symTab.add(lexeme.toLowerCase());} // Make string lowercase. Instructions say language is case insensitive.
+				lexeme = lexeme.toLowerCase(); // Make string lowercase. Instructions say language is case insensitive.
+				if (!isKeyword(lexeme) && !inSTab(lexeme)){symTab.add(lexeme);} 
 				tokenID = ident;
 				break;
 			case digit:

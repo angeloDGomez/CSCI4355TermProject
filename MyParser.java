@@ -3,6 +3,7 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Arrays;
 
 public class MyParser{
 	//Token Storage
@@ -54,15 +55,13 @@ public class MyParser{
 			if (currTok.getTID() == 20){
 				getNextTok();
 				r2();
-				//getNextTok();
 				r6();
-				
 				if (currTok.getTID() == 21){
 					System.out.println("Parser should be done here.");
-				}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "}");}
-			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "{");}
+				}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "}", currTok.getLexeme());}
+			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "{", currTok.getLexeme());}
 			
-		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "program");}
+		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "program", currTok.getLexeme());}
 		
 		
 		
@@ -71,7 +70,9 @@ public class MyParser{
 	// Rule 2 -> DECL_SEC
 	private void r2(){
 		r3();
-		
+		if(!(Arrays.asList(keywords).contains(currTok.getLexeme()) || myToks.get(tokCount).getTID() == 10)){
+			r2();
+		}
 	}
 	
 	// Rule 3 -> DECL
@@ -79,21 +80,21 @@ public class MyParser{
 		r4();
 		if (currTok.getTID() == 25){
 			getNextTok();
-			if(currTok.getLexeme().equals("Float")){
+			if(currTok.getLexeme().equals("float")){
 				getNextTok();
 				if(currTok.getTID() == 26){
 					getNextTok();
-				}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ";");}
-			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "Float");}
-		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ":");}
+				}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ";", currTok.getLexeme());}
+			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "Float", currTok.getLexeme());}
+		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ":", currTok.getLexeme());}
 	}
 	
 	// Rule 4 -> ID_LIST
 	private void r4(){
 		r5();
-		while(currTok.getTID() == 24){
+		if(currTok.getTID() == 24){
 			getNextTok();
-			r5();
+			r4();
 		}
 	}
 	
@@ -104,21 +105,41 @@ public class MyParser{
 				Collections.rotate(symTab, -1); // rotate symbol table, this means that if a duplicate is found in the declaration it will error.
 				getNextTok();
 			}else{MyErrorHandler.alreadyDecSymbErr(currTok.getLineNum(), currTok.getLexeme());}
-		}else{MyErrorHandler.illegalSymbolErr(currTok.getLineNum());}	
+		}else{MyErrorHandler.illegalSymbolErr(currTok.getLineNum());}
+		
 	}
 
 	// Rule 6 -> STMT_SEC
 	private void r6(){
+		r7();
 		
 	}
 	
 	// Rule 7 -> STMT
 	public void r7(){
-		
+		//if (!Arrays.asList(keywords).contains(currTok.getLexeme())){r8();}
+		if (currTok.getLexeme().equals("if")){r9();}
+		else if (currTok.getLexeme().equals("while")){r10();}
+		else if (currTok.getLexeme().equals("repeat")){r11();}
+		else if (currTok.getLexeme().equals("cin")){r12();}
+		else if (currTok.getLexeme().equals("cout")){r13();}
+		else{r8();} // Unless there is some unexpected error I cant think of this should work.
+		// Add better comment later here.
 	}
 	
 	// Rule 8 -> ASSIGN
 	public void r8(){
+		if (symTab.contains(currTok.getLexeme())){
+			getNextTok();
+			if (currTok.getTID() == 10){
+				getNextTok();
+				r14();
+				if (currTok.getTID() == 26){
+					getNextTok();
+				}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ";", currTok.getLexeme());}
+			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ":=", currTok.getLexeme());}
+			
+		}else{MyErrorHandler.undeclaredSymbErr(currTok.getLineNum(), currTok.getLexeme());}
 		
 	}
 	
@@ -149,16 +170,30 @@ public class MyParser{
 	
 	// Rule 14 -> EXPR
 	public void r14(){
+		r15();
 		
 	}
 	
 	// Rule 15 -> FACTOR
 	public void r15(){
+		r16();
 		
 	}
 	
 	// Rule 16 -> OPERAND
 	public void r16(){
+		// FLOAT
+		if (Character.isDigit(currTok.getLexeme().charAt(0))){
+			r17();
+		}
+		// ID
+		else if (Character.isAlphabetic(currTok.getLexeme().charAt(0))){
+			r5();
+		}
+		// (EXPR)
+		else if (currTok.getTID = 22){
+			r15();
+		}
 		
 	}
 	

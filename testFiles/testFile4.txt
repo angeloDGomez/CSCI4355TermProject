@@ -1,6 +1,8 @@
 			program		 {
-	ABc, def	, gHi, jkl 	:Float;
-	ABc := 42.12;
+	ABc, def:Float;
+gHi, jkl 	:Float;
+	ABc := 
+42.12;
 	def := 11451.5441;
 	if (ABc 		< def) 	{
 	gHi := (ABc + 	def)		;
