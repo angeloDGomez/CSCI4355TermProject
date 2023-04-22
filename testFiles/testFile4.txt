@@ -1,0 +1,14 @@
+			program		 {
+	ABc, def	, gHi, jkl 	:Float;
+	ABc := 42.12;
+	def := 11451.5441;
+	if (ABc 		< def) 	{
+	gHi := (ABc + 	def)		;
+	}
+	else{		gHi := (ABc * 	def);}
+	while (ABc < def){
+	cin << 		jkl; def - 1000.000;
+	}
+	repeat {cout >> 		jkl;ABc/10.0;	}until(def > ABc);
+	jkl:=(def%ABc);
+}			

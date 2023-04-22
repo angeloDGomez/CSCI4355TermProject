@@ -27,7 +27,6 @@ public class MyScanner{
 	//Token IDs
 	static final int ident =0;
 	static final int floatLit = 5;
-	static final int newLine = 9;
 	// Operator IDs will be their index in the operator array + 10
 
 	/* Operators
@@ -83,9 +82,6 @@ public class MyScanner{
 		while(Character.isWhitespace(currChar) && strPtr!= inLen){
 			if(currChar == '\n'){
 				lineCount++;
-				// Add new line to token list for line count and error handling in parser
-				MyTokens newLineTok = new MyTokens("", newLine);
-				myToks.add(newLineTok);
 				}
 			getChar();
 		}
@@ -115,7 +111,7 @@ public class MyScanner{
 				}
 				// Char can be followed by a symbol but not by a digit.
 				if (Character.isDigit(currChar)){
-					unexpectedCharErr();
+					MyErrorHandler.unexpectedCharErr(lineCount);
 				}
 				// Add new variable name to the symbol table.
 				if (!isKeyword(lexeme) && !inSTab(lexeme)){symTab.add(lexeme.toLowerCase());} // Make string lowercase. Instructions say language is case insensitive.
@@ -128,13 +124,13 @@ public class MyScanner{
 				}
 				// All numbers are floating point so need .
 				if(currChar != '.'){
-					unexpectedCharErr();
+					MyErrorHandler.unexpectedCharErr(lineCount);
 				}
 				lexeme += currChar;
 				getChar();
 				// Ensure digits for second half of floating point.
 				if (!Character.isDigit(currChar)){
-					unexpectedCharErr();
+					MyErrorHandler.unexpectedCharErr(lineCount);
 				
 				}
 				while(currCharType == digit){
@@ -143,7 +139,7 @@ public class MyScanner{
 				}
 				// Digit can be followed by a symbol but not by a char.
 				if (Character.isLetter(currChar)){
-					unexpectedCharErr();
+					MyErrorHandler.unexpectedCharErr(lineCount);
 				}
 				tokenID = floatLit;
 				break;
@@ -164,13 +160,13 @@ public class MyScanner{
 						getChar();
 						tokenID += Arrays.asList(ops).indexOf(lexeme);
 						}
-					else{unexpectedCharErr();}
+					else{MyErrorHandler.unexpectedCharErr(lineCount);}
 				}
 				// Check for valid 1 char long operators
 				else{
 					if(inOPList(lexeme)){
 						tokenID += Arrays.asList(ops).indexOf(lexeme);
-					}else{unexpectedCharErr();}
+					}else{MyErrorHandler.unexpectedCharErr(lineCount);}
 				}
 				break;
 			/* This case should only be hit once you go through the entire code.
@@ -183,20 +179,12 @@ public class MyScanner{
 		}
 		// Uncomment the following line of code so the scanner will print out the appropriate tokens and lexemes.
 		//System.out.printf("Next token's typeID is %d. Next lexeme is %s.\n", tokenID, lexeme);
-		MyTokens toTokList = new MyTokens(lexeme, tokenID);
+		MyTokens toTokList = new MyTokens(lexeme, tokenID, lineCount);
 		myToks.add(toTokList);
 	}
 	
-	private void unexpectedCharErr(){
-		System.out.printf("Error: Unexpected character found on line %d.\nEnding Scan.\n", lineCount);
-		System.exit(0);
-	}
+	public ArrayList<MyTokens> getTokens(){return myToks;}
 	
-	public ArrayList<MyTokens> getTokens(){
-		return myToks;
-	}
+	public ArrayList<String> getSymbolTable(){return symTab;}
 	
-	public ArrayList<String> getSymbolTable(){
-		return symTab;
-	}
 }
