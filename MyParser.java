@@ -10,9 +10,9 @@ public class MyParser{
 	private ArrayList<MyTokens> myToks = new ArrayList<MyTokens>();
 	
 	// Contains the list of unique variables that were found in the parser
-	// private ArrayList<String> symTab = new ArrayList<String>();
+	private ArrayList<String> symTab = new ArrayList<String>();
 	// parser is the one that puts stuff in the symbol table maybe use MySymbols
-	private ArrayList<MySymbols> symTab = new ArrayList<MySymbols>();
+	//private ArrayList<MySymbols> symTab = new ArrayList<MySymbols>();
 	
 	private MyTokens currTok;
 	private int tokCount; // Always points at the next token.
@@ -111,7 +111,19 @@ public class MyParser{
 	// Rule 5 -> ID
 	private void r5(int mode){
 		if (mode == 1){
-			if ()
+			if (symTab.contains(currTok.getLexeme())){
+				MyErrorHandler.alreadyDecSymbErr(currTok.getLineNum(), currTok.getLexeme());
+			}
+			else{
+				symTab.add(currTok.getLexeme());
+				getNextTok();
+			}
+		}
+		else if (mode == 2){
+			if (symTab.contains(currTok.getLexeme())){
+				getNextTok();
+			}
+			else{MyErrorHandler.undeclaredSymbErr(currTok.getLineNum(), currTok.getLexeme());}
 		}
 		
 		/*if (currTok.getLexeme().matches("[a-zA-Z]+")){
@@ -147,7 +159,7 @@ public class MyParser{
 	
 	// Rule 8 -> ASSIGN
 	private void r8(){
-		r5();
+		r5(2);
 		if (currTok.getTID() == 10){
 			getNextTok();
 			r14();
@@ -180,7 +192,7 @@ public class MyParser{
 		getNextTok();
 		if (currTok.getTID() == 27){
 			getNextTok();
-			r4();
+			r4(2);
 			if(currTok.getTID() == 26){
 				getNextTok();
 			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ";", currTok.getLexeme());}
@@ -192,7 +204,7 @@ public class MyParser{
 		getNextTok();
 		if (currTok.getTID() == 28){
 			getNextTok();
-			r4();
+			r4(2);
 			if(currTok.getTID() == 26){
 				getNextTok();
 			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ";", currTok.getLexeme());}
@@ -227,7 +239,7 @@ public class MyParser{
 		}
 		// ID
 		else if (Character.isAlphabetic(currTok.getLexeme().charAt(0))){
-			r5();
+			r5(2);
 		}
 		// (EXPR)
 		else{ 

@@ -5,4 +5,5 @@ program
     cin << x,y;
     y := x+410.0456;
     cout >> y;
+   cin << z;
 }

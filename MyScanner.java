@@ -94,9 +94,11 @@ public class MyScanner{
 	private boolean inOPList(String testOP){
 		return Arrays.asList(ops).contains(testOP);}
 
+/*
 	// Check if user defined var is already in symbol table
 	private boolean inSTab(String testLex){
 		return symTab.contains(testLex);}
+		*/
 	
 	private void lex(){
 		lexeme = "";
