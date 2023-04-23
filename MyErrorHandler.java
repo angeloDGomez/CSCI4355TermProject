@@ -27,6 +27,11 @@ public class MyErrorHandler{
 		System.out.printf("Error: Symbol %s on line %d was never declared.\nEnding Parse.\n", symbol, lineCount);
 		System.exit(0);		
 	}
+	
+	public static void expectedEOFErr(int lineCount, String symbol){
+		System.out.printf("Error: Expected to find 'EOF' symbol on line %d, but found '%s' instead.", lineCount, symbol);
+		System.exit(0);	
+	}
 	/*
 
 	

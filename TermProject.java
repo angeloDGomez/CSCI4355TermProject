@@ -10,11 +10,10 @@ public class TermProject{
 	public static Scanner sc;
 	public static String inputFile;
 	public static ArrayList<MyTokens> toks;
-	public static ArrayList<String> symTab;
 	
 	public static void main(String[] args)throws FileNotFoundException{
 		//Extract program from file.
-		File inFile = new File("testFiles/testFile4.txt"); //Choose file from this line.
+		File inFile = new File("testFiles/testFile5.txt"); //Choose file from this line.
 		//I can implement asking for file path from command line in future iterations if that is preferred.
 		sc = new Scanner(inFile);
 		storeFile();
@@ -24,9 +23,7 @@ public class TermProject{
 		toks = mySC.getTokens();
 		System.out.println(toks);
 		System.out.println("\n\n\n\nThe tokens are printed above for reference.\nDelete this line later.\n\n\n");
-		symTab = mySC.getSymbolTable();
-		System.out.println(symTab);
-		MyParser myP = new MyParser(toks, symTab);
+		MyParser myP = new MyParser(toks);
 		myP.parseProgram();
 	}
 	

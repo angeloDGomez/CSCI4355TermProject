@@ -114,7 +114,7 @@ public class MyScanner{
 				}
 				// Add new variable name to the symbol table.
 				lexeme = lexeme.toLowerCase(); // Make string lowercase. Instructions say language is case insensitive.
-				if (!isKeyword(lexeme) && !inSTab(lexeme)){symTab.add(lexeme);} 
+				//if (!isKeyword(lexeme) && !inSTab(lexeme)){symTab.add(lexeme);} 
 				tokenID = ident;
 				break;
 			case digit:
