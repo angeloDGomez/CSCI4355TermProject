@@ -1,9 +1,15 @@
 program
 {
     x, y: Float;
+z: Float;
 
     cin << x,y;
-    y := x+410.0456;
+    y := x/410.0456;
     cout >> y;
-   cin << z;
+   if(z > x){
+ x := z;
+	}else{z := x;}
+   while ( y < x){ x:= x +z; }
+
+		repeat {z:= x + y;} until (z > (z * 2.0 ));
 }

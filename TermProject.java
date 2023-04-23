@@ -10,6 +10,7 @@ public class TermProject{
 	public static Scanner sc;
 	public static String inputFile;
 	public static ArrayList<MyTokens> toks;
+	public static MyErrorHandler eh = new MyErrorHandler();
 	
 	public static void main(String[] args)throws FileNotFoundException{
 		//Extract program from file.
@@ -21,8 +22,6 @@ public class TermProject{
 		MyScanner mySC = new MyScanner(inputFile);
 		mySC.scanProgram();
 		toks = mySC.getTokens();
-		System.out.println(toks);
-		System.out.println("\n\n\n\nThe tokens are printed above for reference.\nDelete this line later.\n\n\n");
 		MyParser myP = new MyParser(toks);
 		myP.parseProgram();
 	}

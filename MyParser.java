@@ -9,10 +9,8 @@ public class MyParser{
 	//Token Storage
 	private ArrayList<MyTokens> myToks = new ArrayList<MyTokens>();
 	
-	// Contains the list of unique variables that were found in the parser
+	// Will contain the list of unique variables that were found in the parser
 	private ArrayList<String> symTab = new ArrayList<String>();
-	// parser is the one that puts stuff in the symbol table maybe use MySymbols
-	//private ArrayList<MySymbols> symTab = new ArrayList<MySymbols>();
 	
 	private MyTokens currTok;
 	private int tokCount; // Always points at the next token.
@@ -172,19 +170,57 @@ public class MyParser{
 	// Rule 9 -> IFSTMT
 	public void r9(){
 		getNextTok();
+		r18();
+		if (currTok.getTID() == 20){
+			getNextTok();
+			r6();
+			if(currTok.getTID() == 21){
+				getNextTok();
+			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "}", currTok.getLexeme());}
+		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "{", currTok.getLexeme());}
+		if (currTok.getLexeme().equals("else")){
+			getNextTok();
+			if (currTok.getTID() == 20){
+				getNextTok();
+				r6();
+				if(currTok.getTID() == 21){
+					getNextTok();
+				}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "}", currTok.getLexeme());}
+			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "{", currTok.getLexeme());}
+		}
 		
 	}
 	
 	// Rule 10 -> WHILESTMT
 	public void r10(){
 		getNextTok();
-		
+		r18();
+		if (currTok.getTID() == 20){
+			getNextTok();
+			r6();
+			if(currTok.getTID() == 21){
+				getNextTok();
+			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "}", currTok.getLexeme());}
+		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "{", currTok.getLexeme());}
 	}
 	
 	// Rule 11 -> REPEAT
 	public void r11(){
 		getNextTok();
-		
+		if (currTok.getTID() == 20){
+			getNextTok();
+			r6();
+			if(currTok.getTID() == 21){
+				getNextTok();
+			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "}", currTok.getLexeme());}
+		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "{", currTok.getLexeme());}
+		if (currTok.getLexeme().equals("until")){
+			getNextTok();
+			r18();
+		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "until", currTok.getLexeme());}
+		if (currTok.getTID() == 26){
+			getNextTok();
+		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ";", currTok.getLexeme());}
 	}
 	
 	// Rule 12 -> INPUT
@@ -242,14 +278,12 @@ public class MyParser{
 			r5(2);
 		}
 		// (EXPR)
-		else{ 
-			if (currTok.getTID() == 22){
+		else if (currTok.getTID() == 22){ 
+			getNextTok();
+			r14();
+			if (currTok.getTID() == 23){
 				getNextTok();
-				r14();
-				if (currTok.getTID() == 23){
-					getNextTok();
-				}else {MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ")", currTok.getLexeme());}
-			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "(", currTok.getLexeme());}
+			}else {MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ")", currTok.getLexeme());}
 		}
 	}
 	
@@ -273,7 +307,17 @@ public class MyParser{
 	
 	// Rule 18 -> COMP
 	private void r18(){
-		
+		if (currTok.getTID() == 22){
+			getNextTok();
+			r16();
+			if(currTok.getTID() == 16 || currTok.getTID() == 17 || currTok.getTID() == 18 || currTok.getTID() == 19){
+				getNextTok();
+				r16();
+			}else{MyErrorHandler.illegalSymbolErr(currTok.getLineNum());}
+			if (currTok.getTID() == 23){	
+				getNextTok();
+			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), ")", currTok.getLexeme());}
+		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "(", currTok.getLexeme());}
 	}
 
 

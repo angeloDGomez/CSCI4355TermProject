@@ -9,7 +9,7 @@ public class MyErrorHandler{
 	}
 	
 	public static void missingExpectedSyntaxErr(int lineCount, String expectedVal, String actualVal){
-		System.out.printf("Error: Improper syntax. Expected '%s' on line %d, but found '%s' instead.\nEnding Parse.\n", lineCount, expectedVal, actualVal);
+		System.out.printf("Error: Improper syntax. Expected '%s' on line %d, but found '%s' instead.\nEnding Parse.\n", expectedVal, lineCount, actualVal);
 		System.exit(0);
 	}
 	

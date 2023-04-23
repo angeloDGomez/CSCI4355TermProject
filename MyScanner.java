@@ -47,9 +47,6 @@ public class MyScanner{
 	//Token Storage - will be more utilized in parser
 	private ArrayList<MyTokens> myToks = new ArrayList<MyTokens>();
 	
-	// Symbol Table is one dimensional since all variables are floats.
-	private ArrayList<String> symTab = new ArrayList<String>();
-	
 	public MyScanner(String myProg){
 		this.lineCount = 1;
 		this.strPtr = 0;
@@ -93,12 +90,6 @@ public class MyScanner{
 	// Check if symbol is a valid operator
 	private boolean inOPList(String testOP){
 		return Arrays.asList(ops).contains(testOP);}
-
-/*
-	// Check if user defined var is already in symbol table
-	private boolean inSTab(String testLex){
-		return symTab.contains(testLex);}
-		*/
 	
 	private void lex(){
 		lexeme = "";
@@ -116,7 +107,6 @@ public class MyScanner{
 				}
 				// Add new variable name to the symbol table.
 				lexeme = lexeme.toLowerCase(); // Make string lowercase. Instructions say language is case insensitive.
-				//if (!isKeyword(lexeme) && !inSTab(lexeme)){symTab.add(lexeme);} 
 				tokenID = ident;
 				break;
 			case digit:
@@ -153,6 +143,10 @@ public class MyScanner{
 					// do nothing if these are the symbols
 					// reasons to do nothing x := (a + (b * c))
 					// issues with parenthesis and bracket order will be dealt with by parser
+					if(inOPList(lexeme)){
+						String x = String.valueOf(lexeme);
+						tokenID += Arrays.asList(ops).indexOf(x);
+					}else{MyErrorHandler.unexpectedCharErr(lineCount);}
 				}
 				// Check for valid 2 char long operators
 				else if (currCharType == symbol){
@@ -167,7 +161,8 @@ public class MyScanner{
 				// Check for valid 1 char long operators
 				else{
 					if(inOPList(lexeme)){
-						tokenID += Arrays.asList(ops).indexOf(lexeme);
+						String x = String.valueOf(lexeme);
+						tokenID += Arrays.asList(ops).indexOf(x);
 					}else{MyErrorHandler.unexpectedCharErr(lineCount);}
 				}
 				break;
@@ -186,7 +181,5 @@ public class MyScanner{
 	}
 	
 	public ArrayList<MyTokens> getTokens(){return myToks;}
-	
-	public ArrayList<String> getSymbolTable(){return symTab;}
 	
 }
