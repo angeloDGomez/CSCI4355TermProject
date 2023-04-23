@@ -8,12 +8,10 @@ public class MyTree{
 	
 	public MyTree(){
 		theTree = new ArrayList<TreeObject>();
-		//TreeObject a; // Never called upon just here so TreeObject compiles when TermProject.java is compiled
 	}
 	
 	public void addTreeObj(TreeObject t){
 		if (theTree.size() == 0){
-			System.out.println("asdf");
 			theTree.add(t);
 		}else{
 			int i;

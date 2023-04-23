@@ -10,12 +10,10 @@ public class TermProject{
 	public static Scanner sc;
 	public static String inputFile;
 	public static ArrayList<MyTokens> toks;
-	//public static MyErrorHandler eh = new MyErrorHandler();
-	//public static MyTree parseTree = new MyTree(); //Never called upon just here so MyTree compiles when TermProject.java is compiled
 	
 	public static void main(String[] args)throws FileNotFoundException{
 		//Extract program from file.
-		File inFile = new File("testFiles/testFile5.txt"); //Choose file from this line.
+		File inFile = new File("testFiles/testFile4.txt"); //Choose file from this line.
 		//I can implement asking for file path from command line in future iterations if that is preferred.
 		sc = new Scanner(inFile);
 		storeFile();

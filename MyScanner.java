@@ -105,7 +105,6 @@ public class MyScanner{
 				if (Character.isDigit(currChar)){
 					MyErrorHandler.unexpectedCharErr(lineCount, currChar);
 				}
-				// Add new variable name to the symbol table.
 				lexeme = lexeme.toLowerCase(); // Make string lowercase. Instructions say language is case insensitive.
 				tokenID = ident;
 				break;
@@ -140,9 +139,7 @@ public class MyScanner{
 				getChar();
 				tokenID = 10; //tokenID is 10 + pos in OP list
 				if (currChar == ';' || currChar == '(' || currChar == '{' || currChar == ')' || currChar == '}'){
-					// do nothing if these are the symbols
-					// reasons to do nothing x := (a + (b * c))
-					// issues with parenthesis and bracket order will be dealt with by parser
+					// Check for valid 1 char long operators
 					if(inOPList(lexeme)){
 						String x = String.valueOf(lexeme);
 						tokenID += Arrays.asList(ops).indexOf(x);

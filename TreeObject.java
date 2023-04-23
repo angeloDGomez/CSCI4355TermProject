@@ -17,7 +17,6 @@ public class TreeObject{
 	}
 	
 	public int getNodeNum(){return this.nodeNum;}
-	
 	public void setBranchNum(int bn){this.branchNum = bn;}
 	public void setBranchNum2(int bn){this.branchNum2 = bn;}
 	public void setBranchNum3(int bn){this.branchNum3 = bn;}

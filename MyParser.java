@@ -62,7 +62,7 @@ public class MyParser{
 				node.setBranchNum(nodeCount +1);
 				r2();
 				node.setBranchNum2(nodeCount + 1);
-				r6();
+			r6(); // r6 finds } to verify end of file.
 			}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "{", currTok.getLexeme());}
 		}else{MyErrorHandler.missingExpectedSyntaxErr(currTok.getLineNum(), "program", currTok.getLexeme());}
 		node.setAltNum(1);
@@ -137,6 +137,9 @@ public class MyParser{
 				if (symTab.contains(currTok.getLexeme())){
 					MyErrorHandler.alreadyDecSymbErr(currTok.getLineNum(), currTok.getLexeme());
 				}
+				else if(Arrays.asList(keywords).contains(currTok.getLexeme())){
+					MyErrorHandler.keywordAsVarErr(currTok.getLineNum(), currTok.getLexeme());
+				}
 				else{
 					symTab.add(currTok.getLexeme());
 					getNextTok();
@@ -145,6 +148,8 @@ public class MyParser{
 			else if (mode == 2){
 				if (symTab.contains(currTok.getLexeme())){
 					getNextTok();
+				}else if(Arrays.asList(keywords).contains(currTok.getLexeme())){
+					MyErrorHandler.illegalKeywordUseErr(currTok.getLineNum(), currTok.getLexeme());
 				}
 				else{MyErrorHandler.undeclaredSymbErr(currTok.getLineNum(), currTok.getLexeme());}
 			}
@@ -173,7 +178,6 @@ public class MyParser{
 	private void r7(){
 		nodeCount += 1;
 		TreeObject node = new TreeObject(nodeCount, 7);
-		//if (!Arrays.asList(keywords).contains(currTok.getLexeme())){r8();}
 		if (currTok.getLexeme().equals("if")){
 			node.setBranchNum(nodeCount + 1);
 			node.setAltNum(2);

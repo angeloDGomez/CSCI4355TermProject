@@ -13,6 +13,16 @@ public class MyErrorHandler{
 		System.exit(0);
 	}
 	
+	public static void keywordAsVarErr(int lineCount, String s){
+		System.out.printf("Error: Keyword '%s' on line %d cannot be used as a variable.\nEnding Scan.\n", s, lineCount);
+		System.exit(0);
+	}
+	
+	public static void illegalKeywordUseErr(int lineCount, String s){
+		System.out.printf("Error: Keyword '%s' on line %d cannot be used in that context.\nEnding Scan.\n", s, lineCount);
+		System.exit(0);
+	}
+	
 	public static void missingExpectedSyntaxErr(int lineCount, String expectedVal, String actualVal){
 		System.out.printf("Error: Improper syntax. Expected '%s' on line %d, but found '%s' instead.\nEnding Parse.\n", expectedVal, lineCount, actualVal);
 		System.exit(0);
