@@ -10,7 +10,8 @@ public class TermProject{
 	public static Scanner sc;
 	public static String inputFile;
 	public static ArrayList<MyTokens> toks;
-	public static MyErrorHandler eh = new MyErrorHandler();
+	//public static MyErrorHandler eh = new MyErrorHandler();
+	//public static MyTree parseTree = new MyTree(); //Never called upon just here so MyTree compiles when TermProject.java is compiled
 	
 	public static void main(String[] args)throws FileNotFoundException{
 		//Extract program from file.

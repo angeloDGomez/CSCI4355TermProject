@@ -4,12 +4,12 @@ program
 z: Float;
 
     cin << x,y;
-    y := x/410.0456;
+    y := x % 410.0456;
     cout >> y;
-   if(z > x){
+   if(z = 23.0) {
  x := z;
 	}else{z := x;}
    while ( y < x){ x:= x +z; }
 
 		repeat {z:= x + y;} until (z > (z * 2.0 ));
-}
+ }

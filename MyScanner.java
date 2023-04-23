@@ -103,7 +103,7 @@ public class MyScanner{
 				}
 				// Char can be followed by a symbol but not by a digit.
 				if (Character.isDigit(currChar)){
-					MyErrorHandler.unexpectedCharErr(lineCount);
+					MyErrorHandler.unexpectedCharErr(lineCount, currChar);
 				}
 				// Add new variable name to the symbol table.
 				lexeme = lexeme.toLowerCase(); // Make string lowercase. Instructions say language is case insensitive.
@@ -116,13 +116,13 @@ public class MyScanner{
 				}
 				// All numbers are floating point so need .
 				if(currChar != '.'){
-					MyErrorHandler.unexpectedCharErr(lineCount);
+					MyErrorHandler.unexpectedCharErr(lineCount, currChar);
 				}
 				lexeme += currChar;
 				getChar();
 				// Ensure digits for second half of floating point.
 				if (!Character.isDigit(currChar)){
-					MyErrorHandler.unexpectedCharErr(lineCount);
+					MyErrorHandler.unexpectedCharErr(lineCount,currChar);
 				
 				}
 				while(currCharType == digit){
@@ -131,7 +131,7 @@ public class MyScanner{
 				}
 				// Digit can be followed by a symbol but not by a char.
 				if (Character.isLetter(currChar)){
-					MyErrorHandler.unexpectedCharErr(lineCount);
+					MyErrorHandler.unexpectedCharErr(lineCount, currChar);
 				}
 				tokenID = floatLit;
 				break;
@@ -146,7 +146,7 @@ public class MyScanner{
 					if(inOPList(lexeme)){
 						String x = String.valueOf(lexeme);
 						tokenID += Arrays.asList(ops).indexOf(x);
-					}else{MyErrorHandler.unexpectedCharErr(lineCount);}
+					}else{MyErrorHandler.illegalCharErr(lineCount, lexeme);}
 				}
 				// Check for valid 2 char long operators
 				else if (currCharType == symbol){
@@ -156,14 +156,14 @@ public class MyScanner{
 						getChar();
 						tokenID += Arrays.asList(ops).indexOf(lexeme);
 						}
-					else{MyErrorHandler.unexpectedCharErr(lineCount);}
+					else{MyErrorHandler.illegalCharErr(lineCount, lexeme);}
 				}
 				// Check for valid 1 char long operators
 				else{
 					if(inOPList(lexeme)){
 						String x = String.valueOf(lexeme);
 						tokenID += Arrays.asList(ops).indexOf(x);
-					}else{MyErrorHandler.unexpectedCharErr(lineCount);}
+					}else{MyErrorHandler.illegalCharErr(lineCount, lexeme);}
 				}
 				break;
 			/* This case should only be hit once you go through the entire code.
