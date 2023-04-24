@@ -1,7 +1,7 @@
 program
 {
-    x, y: Float;
-z: Float;
+    x, cina: Float;
+z, y: Float;
 
     cin << x,y;
     y := x + 410.0456;
